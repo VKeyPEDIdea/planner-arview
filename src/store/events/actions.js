@@ -1,29 +1,5 @@
 import * as actionTypes from './actionTypes';
 
-export const getPlannerEvents = () => {
-	return dispatch => {
-
-	}
-};
-
-export const getEventSuccess = list => {
-	return {
-		type: actionTypes.GET_EVENTS_SUCCESS,
-		payload: {
-			list,
-		}
-	};
-};
-
-export const getEventFailed = error => {
-	return {
-		type: actionTypes.GET_EVENTS_FAILED,
-		payload: {
-			error,
-		}
-	};
-};
-
 export const addNewEvent = event => {
 	return {
 		type: actionTypes.ADD_NEW_EVENT,
@@ -33,11 +9,11 @@ export const addNewEvent = event => {
 	};
 };
 
-export const deleteEvent = eventId => {
+export const deleteEvent = id => {
 	return {
 		type: actionTypes.DELETE_EVENT,
 		payload: {
-			eventId,
+			id,
 		}
 	};
 };
@@ -47,6 +23,15 @@ export const editEvent = event => {
 		type: actionTypes.EDIT_EVENT,
 		payload: {
 			event,
+		}
+	};
+};
+
+export const setDate = date => {
+	return {
+		type: actionTypes.SET_DATE,
+		payload: {
+			date,
 		}
 	};
 };

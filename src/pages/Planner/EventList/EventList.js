@@ -7,38 +7,39 @@ const EventList = props => {
 	const {
 		events,
 		deleteEvent,
-		editEvent,
+		currentDate
 	} = props;
-	const list = events.map(item => {
-		return <EventItem
-			key={item.eventId}
-			id={item.eventId}
-			title={item.title}
-			budget={item.budget}
-			address={item.address}
-			time={item.time}
-			notes={item.notes}
-			onDelete={eventId => deleteEvent(eventId)}
-			onEdit={eventId => editEvent(eventId)} />
+	const list = events
+		.filter(event => event.date === currentDate)
+		.map(item => {
+			return <EventItem
+				key={item.id}
+				id={item.id}
+				title={item.title}
+				budget={item.budget}
+				address={item.address}
+				time={item.time}
+				notes={item.notes}
+				onDelete={() => deleteEvent(item.id)}/>
 	});
 
 	return(
 		<div>
-			{list}
+			{list.length > 0 ? list : <p>Событий на дату нет</p>}
 		</div>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		events: state.events.list
+		events: state.events.list,
+		currentDate: state.events.currentDate,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		deleteEvent: id => dispatch(actions.deleteEvent(id)),
-		editEvent: id => dispatch(actions.editEvent(id))
 	};
 };
 

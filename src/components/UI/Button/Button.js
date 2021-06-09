@@ -4,10 +4,11 @@ import React from 'react';
 const Button = props => {
 	const {
 		title,
+		click
 	} = props;
 
 	return(
-		<div className={classes.button}>{title}</div>
+		<button className={classes.button} onClick={click}>{title}</button>
 	);
 }
 

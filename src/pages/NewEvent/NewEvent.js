@@ -5,14 +5,20 @@ import * as actions from '../../store/index';
 import { useState } from 'react';
 import { getRandomEventId } from '../../utilities/getRandomEventId';
 import { Link, withRouter } from 'react-router-dom';
+import Button from '../../components/UI/Button/Button';
+import InputText from '../../components/UI/InputText/InputText';
+import InpuSelect from '../../components/UI/InputSelect/InputSelect';
+import InputTime from '../../components/UI/InputTime/InputTime';
 
 const NewEvent = props => {
 	const {
 		createEvent,
+		history,
+		date
 	} = props;
 
 	const [ title, setTitle ] = useState('');
-	const [ type, setType ] = useState(1);
+	const [ type, setType ] = useState('1');
 	const [ place, setPlace ] = useState('');
 	const [ time, setTime ] = useState('');
 	const [ cost, setCost ] = useState('');
@@ -21,12 +27,16 @@ const NewEvent = props => {
 	const onSaveHandler = e => {
 		e.preventDefault();
 		createEvent({
-			eventId: getRandomEventId(),
+			date,
+			id: getRandomEventId(),
 			title,
 			type,
 			address: place,
 			time,
+			budget: cost,
+			notes
 		});
+		history.push('/');
 	};
 
 	const titleChangeHandler = event => {
@@ -51,49 +61,35 @@ const NewEvent = props => {
 
 	const notesChangeHandler = event => {
 		setNotes(event.target.value);
-	}
+	};
 
 	let fields;
 	if (type === '1') fields = (
-		<>
-			<label className={classes.input}>
-				<p className={classes.label}>Сколько денег будет потрачено</p>
-				<input
-					onChange={event => costChangeHandler(event)}
-					value={cost}
-					type='text'/>
-			</label>
-		</>
+		<InputText
+			label='Сколько денег будет потрачено'
+			change={event => costChangeHandler(event)}
+			value={cost}/>
 	);
 
 	if (type === '2') fields = (
 		<>
-			<label className={classes.input}>
-				<p className={classes.label}>Куда идти?</p>
-				<input
-					onChange={event => placeChangeHandler(event)}
-					value={place}
-					type='text'/>
-			</label>
-			<label className={classes.input}>
-				<p className={classes.label}>Во сколько?</p>
-				<input
-					onChange={event => timeChangeHandler(event)}
-					value={time}
-					type='time' />
-			</label>
+			<InputText
+				label='Куда идти?'
+				change={event => placeChangeHandler(event)}
+				value={place}/>
+			<InputTime
+				label='Во сколько?'
+				change={event => timeChangeHandler(event)}
+				value={time} />
 		</>
 	);
 
 	if (type === '3') {
 		fields = (
-			<label className={classes.input}>
-				<p className={classes.label}>Пометки / Другое</p>
-				<input
-					onChange={event => notesChangeHandler(event)}
-					value={notes}
-					type='textarea'/>
-			</label>
+			<InputText
+				label='Пометки / Другое'
+				change={event => notesChangeHandler(event)}
+				value={notes}/>
 		);
 	}
 
@@ -101,32 +97,36 @@ const NewEvent = props => {
 		<>
 			<h1>Новое событие</h1>
 			<form>
-				<label className={classes.input}>
-					<p className={classes.label}>Название события</p>
-					<input
-						value={title}
-						onChange={event => titleChangeHandler(event)}
-						type='text'/>
-				</label>
-				<label className={classes.input}>
-					<p className={classes.label}>Тип события</p>
-					<select
-						value={type}
-						onChange={event => typeChangeHandler(event)}
-						name='eventType'>
-						<option value='1'>Праздник</option>
-						<option value='2'>Мероприятие</option>
-						<option value='3'>Пометка</option>
-					</select>
-				</label>
+				<InputText
+						label='Название события'
+						change={event => titleChangeHandler(event)}
+						value={title}/>
+				<InpuSelect
+					label='Тип события'
+					change={event => typeChangeHandler(event)}
+					optionList={[
+						{title: 'Праздник', value: '1'},
+						{title: 'Мероприятие', value: '2'},
+						{title: 'Пометка', value: '3'},
+					]}
+					value={type}
+					name='eventType'/>
 				{fields}
-				<button onClick={onSaveHandler}>Сохранить</button>
-				<Link to='/' style={{textDecoration: 'none'}}>
-					<button>Отмена</button>
-				</Link>
+				<div className={classes.actions}>
+					<Button title='Сохранить' click={e => onSaveHandler(e)} />
+					<Link to='/' style={{textDecoration: 'none'}}>
+						<Button title='Отмена'/>
+					</Link>
+				</div>
 			</form>
 		</>
 	);
+};
+
+const mapStateToProps = state => {
+	return {
+		date: state.events.currentDate,
+	};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -135,4 +135,4 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(NewEvent));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewEvent));

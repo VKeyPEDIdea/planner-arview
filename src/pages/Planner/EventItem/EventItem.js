@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 const EventItem = props => {
 	const {
+		id,
 		title,
 		budget,
 		address,
 		time,
 		notes,
 		onDelete,
-		onEdit
 	} = props;
 
 	return(
@@ -20,15 +20,15 @@ const EventItem = props => {
 				<p className={classes.title}>{title}</p>
 				<div className={classes.actions}>
 					<ButtonIcon title='delete' click={onDelete} />
-					<Link to='/editEvent/'>
-						<ButtonIcon title='edit' click={onEdit} />
+					<Link to={`/editEvent?${id}`}>
+						<ButtonIcon title='edit' />
 					</Link>
 				</div>
 			</div>
-			{budget ? <p>Бюджет: {budget} руб</p> : null}
-			{address ? <p>Адрес: {address}</p>: null}
-			{time ? <p>Время: {time}</p> : null}
-			{notes ? <p>Заметки: {notes}</p> : null}
+			{budget ? <p><span className={classes.label}>Бюджет:</span> {budget} руб</p> : null}
+			{address ? <p><span className={classes.label}>Адрес:</span> {address}</p>: null}
+			{time ? <p><span className={classes.label}>Время:</span> {time}</p> : null}
+			{notes ? <p><span className={classes.label}>Заметки:</span> {notes}</p> : null}
 		</div>
 	);
 }

@@ -1,6 +1,4 @@
-export const GET_PLANNER_EVENTS = 'GET_PLANNER_EVENTS';
-export const GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
-export const GET_EVENTS_FAILED = 'GET_EVENTS_FAILED';
 export const ADD_NEW_EVENT = 'ADD_NEW_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const EDIT_EVENT = 'EDIT_EVENT';
+export const SET_DATE = 'SET_DATE';

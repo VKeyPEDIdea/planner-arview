@@ -2,5 +2,5 @@ export {
 	addNewEvent,
 	editEvent,
 	deleteEvent,
-	getPlannerEvents
+	setDate,
 } from './events/actions';
