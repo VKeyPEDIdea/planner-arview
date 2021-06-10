@@ -4,11 +4,25 @@ import React from 'react';
 const Button = props => {
 	const {
 		title,
-		click
+		click,
+		type
 	} = props;
 
+	let styles;
+	switch (type) {
+		case 'success':
+			styles = [classes.button, classes.success].join(' ');
+			break;
+		case 'primary':
+			styles = [classes.button, classes.primary].join(' ');
+			break;
+		default:
+			styles = [classes.button];
+			break;
+	}
+
 	return(
-		<button className={classes.button} onClick={click}>{title}</button>
+		<button className={styles} onClick={click}>{title}</button>
 	);
 }
 

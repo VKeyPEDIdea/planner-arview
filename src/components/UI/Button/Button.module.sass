@@ -4,13 +4,27 @@
 	font-size: 14px
 	line-height: 24px
 	text-transform: uppercase
-	color: #fff
+	color: #000000
 	border-radius: 4px
 	text-decoration: none
 	font-weight: 500
 	display: inline-block
-	background-color: #3989f1
+	background-color: #ffffff
 	cursor: pointer
+
+	&:hover
+		background-color: $color-grey-90
+
+.success
+	color: #fff
+	background-color: #56d63c
+
+	&:hover
+		background-color: darken(#56d63c, 10%)
+
+.primary
+	color: #fff
+	background-color: #3989f1
 
 	&:hover
 		background-color: darken(#3989f1, 10%)

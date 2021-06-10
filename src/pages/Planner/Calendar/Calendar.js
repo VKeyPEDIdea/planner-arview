@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/UI/Button/Button';
-import { getDate } from '../../../utilities/getDate';
 import * as actions from '../../../store/';
 
 const Calendar = props => {
 	const { currentDate, setDate } = props;
-	const [ choisedDate, setChoisedDate ] = useState(currentDate || getDate());
+	const [ choisedDate, setChoisedDate ] = useState(currentDate);
 
 	const dateChangeHandler = e => {
 		setDate(e.target.value);
@@ -20,11 +19,11 @@ const Calendar = props => {
 			<div className={classes['input-date']} value={choisedDate}>
 				<label>
 				<p className={classes.label}>Текущая дата</p>
-					<input type='date' onChange={e => dateChangeHandler(e)}/>
+					<input type='date' value={choisedDate} onChange={e => dateChangeHandler(e)}/>
 				</label>
 			</div>
 			<Link to='/createEvent' style={{textDecoration: 'none'}}>
-				<Button title='Добавить событие' />
+				<Button type='primary' title='Добавить событие' />
 			</Link>
 		</div>
 	);

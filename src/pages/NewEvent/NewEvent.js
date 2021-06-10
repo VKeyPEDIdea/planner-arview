@@ -113,7 +113,7 @@ const NewEvent = props => {
 					name='eventType'/>
 				{fields}
 				<div className={classes.actions}>
-					<Button title='Сохранить' click={e => onSaveHandler(e)} />
+					<Button type='success' title='Сохранить' click={e => onSaveHandler(e)} />
 					<Link to='/' style={{textDecoration: 'none'}}>
 						<Button title='Отмена'/>
 					</Link>
