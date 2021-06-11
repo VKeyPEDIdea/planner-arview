@@ -1,17 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import EventItem from '../EventItem/EventItem';
-import * as actions from '../../../store/';
+import {
+	getEventsList,
+	selectEventList,
+	selectGetEventsByDate,
+	remove,
+} from '../eventSlice';
+
+import {
+	selectCurrentDate
+} from '../dateSlice';
 
 const EventList = props => {
-	const {
-		events,
-		deleteEvent,
-		currentDate
-	} = props;
-	const list = events
-		.filter(event => event.date === currentDate)
-		.map(item => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getEventsList());
+	}, [dispatch]);
+
+	// const currentDate = useSelector(selectCurrentDate);
+	const events = useSelector(selectEventList);
+		// .filter(event => {
+		// 	console.log(currentDate);
+		// 	return event.date === currentDate;
+		// });
+
+	// const list = selectGetEventsByDate(currentDate)
+	const list = events ? events.map(item => {
 			return <EventItem
 				key={item.id}
 				id={item.id}
@@ -20,27 +35,14 @@ const EventList = props => {
 				address={item.address}
 				time={item.time}
 				notes={item.notes}
-				onDelete={() => deleteEvent(item.id)}/>
-	});
+				onDelete={() => dispatch(remove(item.id))}/>
+	}) : null;
 
 	return(
 		<div>
-			{list.length > 0 ? list : <p>Событий на дату нет</p>}
+			{list ? list : <p>Событий на дату нет</p>}
 		</div>
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		events: state.events.list,
-		currentDate: state.events.currentDate,
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		deleteEvent: id => dispatch(actions.deleteEvent(id)),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventList);
+export default EventList;

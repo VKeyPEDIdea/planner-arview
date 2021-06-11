@@ -14,4 +14,6 @@ export const dateSlice = createSlice({
 
 export const { setCurrentDate } = dateSlice.actions;
 
+export const selectCurrentDate = state => state.currentDate;
+
 export default dateSlice.reducer;

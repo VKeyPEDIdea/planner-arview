@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+// import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import store from './app/store';
 import App from './App';
 import './sass/main.sass';
 import reportWebVitals from './reportWebVitals';
 
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+// const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 // const rootReducer = combineReducers({
 // 	events: eventReducer,

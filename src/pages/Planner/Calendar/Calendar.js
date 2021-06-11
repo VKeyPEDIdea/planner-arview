@@ -1,17 +1,22 @@
 import classes from './Calendar.module.sass';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
-import * as actions from '../../../store/';
+import {
+	setCurrentDate,
+	selectCurrentDate
+} from '../dateSlice';
 
 const Calendar = props => {
-	const { currentDate, setDate } = props;
+	const currentDate = useSelector(selectCurrentDate);
 	const [ choisedDate, setChoisedDate ] = useState(currentDate);
+	const dispatch = useDispatch();
 
 	const dateChangeHandler = e => {
-		setDate(e.target.value);
-		setChoisedDate(e.target.value);
+		const date = e.target.value;
+		dispatch(setCurrentDate(date));
+		setChoisedDate(date);
 	};
 
 	return(
@@ -29,17 +34,4 @@ const Calendar = props => {
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		events: state.events.list,
-		currentDate: state.events.currentDate,
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		setDate: date => dispatch(actions.setDate(date))
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default Calendar;
